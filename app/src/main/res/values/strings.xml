@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">VirtualVolumeButtons</string>
+    <string name="classic">Classic</string>
+    <string name="classic_row">Classic Row</string>
+    <string name="reversed">Reversed</string>
+    <string name="reversed_row">Reversed Row</string>
+</resources>
