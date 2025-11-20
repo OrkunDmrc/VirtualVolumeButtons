@@ -4,6 +4,6 @@
     android:description="@string/reversed_row"
     android:resizeMode="horizontal|vertical"
     android:widgetCategory="home_screen|keyguard"
-    android:previewImage="@color/black">
+    android:previewImage="@drawable/reversed_row">
 
 </appwidget-provider>
