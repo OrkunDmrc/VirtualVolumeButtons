@@ -19,21 +19,32 @@ import androidx.glance.layout.Spacer
 import androidx.glance.layout.height
 import com.example.virtualvolumebuttons.Actions.VolumeDownAction
 import com.example.virtualvolumebuttons.Actions.VolumeUpAction
+import com.example.virtualvolumebuttons.AppCache
 import com.example.virtualvolumebuttons.R
 
-class ClassicButtonsWidget() : GlanceAppWidget() {
+class ButtonsWidget() : GlanceAppWidget() {
     @Composable
     override fun Content(){
+        val bg = AppCache.getBgColor()
+        val btn = AppCache.getBtnColor()
+        val volumeUpId = when(btn) {
+            Color.Black -> R.drawable.ic_volume_up_black
+            else -> R.drawable.ic_volume_up
+        }
+        val volumeDownId = when(btn) {
+            Color.Black -> R.drawable.ic_volume_down_black
+            else -> R.drawable.ic_volume_down
+        }
         Column(
             modifier = GlanceModifier
                 .fillMaxSize()
                 .padding(5.dp)
-                .background(Color(0x80000000)),
+                .background(bg),
             verticalAlignment = Alignment.CenterVertically,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(
-                provider = ImageProvider(R.drawable.ic_volume_up),
+                provider = ImageProvider(volumeUpId),
                 contentDescription = "Volume Up",
                 modifier = GlanceModifier
                     .size(35.dp)
@@ -41,7 +52,7 @@ class ClassicButtonsWidget() : GlanceAppWidget() {
             )
             Spacer(modifier = GlanceModifier.height(5.dp))
             Image(
-                provider = ImageProvider(R.drawable.ic_volume_down),
+                provider = ImageProvider(volumeDownId),
                 contentDescription = "Volume Down",
                 modifier = GlanceModifier
                     .size(35.dp)

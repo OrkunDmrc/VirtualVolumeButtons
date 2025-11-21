@@ -12,6 +12,10 @@ class VolumeDownAction : ActionCallback {
         glanceId: GlanceId,
         parameters: ActionParameters
     ) {
+        volumeDown(context)
+    }
+
+    fun volumeDown(context: Context){
         val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
         audioManager.adjustStreamVolume(
             AudioManager.STREAM_MUSIC,

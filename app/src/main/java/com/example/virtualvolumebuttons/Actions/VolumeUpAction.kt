@@ -12,6 +12,10 @@ class VolumeUpAction : ActionCallback {
         glanceId: GlanceId,
         parameters: ActionParameters
     ) {
+        volumeUp(context)
+    }
+
+    fun volumeUp(context: Context){
         val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
         audioManager.adjustStreamVolume(
             AudioManager.STREAM_MUSIC,

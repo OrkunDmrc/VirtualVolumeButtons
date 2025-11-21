@@ -1,6 +1,7 @@
 package com.example.virtualvolumebuttons
 
 import android.app.Service
+import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
 import android.graphics.PixelFormat
@@ -12,22 +13,35 @@ import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.glance.layout.height
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
@@ -39,8 +53,13 @@ import androidx.savedstate.SavedStateRegistry
 import androidx.savedstate.SavedStateRegistryController
 import androidx.savedstate.SavedStateRegistryOwner
 import androidx.savedstate.setViewTreeSavedStateRegistryOwner
+import com.example.virtualvolumebuttons.Actions.VolumeDownAction
+import com.example.virtualvolumebuttons.Actions.VolumeUpAction
+import com.example.virtualvolumebuttons.Components.DismissBubble
+import com.example.virtualvolumebuttons.Components.FloatingBubble
 
-val bubbleDp = 60
+val bubbleDpX = 60
+val bubbleDpY = 100
 val dismissDp = 80
 class FloatingService : Service() {
 
@@ -53,6 +72,7 @@ class FloatingService : Service() {
     private var isBubbleOverlapping by mutableStateOf(false)
 
     override fun onCreate() {
+        AppCache.init(this)
         super.onCreate()
         windowManager = getSystemService(WINDOW_SERVICE) as WindowManager
         lifecycleOwner = ServiceLifecycleOwner()
@@ -78,6 +98,7 @@ class FloatingService : Service() {
             setViewTreeSavedStateRegistryOwner(lifecycleOwner)
             setContent {
                 FloatingBubble(
+                    context,
                     onDragStart = { dismissView.visibility = View.VISIBLE },
                     onDrag = { dx, dy ->
                         bubbleParams.x += dx.toInt()
@@ -109,7 +130,7 @@ class FloatingService : Service() {
     }
 
     private fun checkOverlap(): Boolean {
-        val bubbleSize = bubbleDp.dpToPx()
+        val bubbleSize = bubbleDpX.dpToPx()
         val dismissSize = dismissDp.dpToPx()
 
         val bubbleCenterX = bubbleParams.x + bubbleSize / 2
@@ -136,40 +157,6 @@ class FloatingService : Service() {
 
     fun Int.dpToPx(): Int = (this * resources.displayMetrics.density).toInt()
 }
-
-@Composable
-fun FloatingBubble(onDragStart: () -> Unit, onDrag: (Float, Float) -> Unit, onDragEnd: () -> Unit) {
-    Box(
-        modifier = Modifier
-            .size(bubbleDp.dp)
-            .background(Color.Blue, CircleShape)
-            .pointerInput(Unit) {
-                detectDragGestures(
-                    onDragStart = { onDragStart() },
-                    onDragEnd = { onDragEnd() }
-                ) { change, dragAmount ->
-                    change.consume()
-                    onDrag(dragAmount.x, dragAmount.y)
-                }
-            }
-    )
-}
-
-@Composable
-fun DismissBubble(isOverlapping: Boolean) {
-    val size by animateDpAsState(if (isOverlapping) dismissDp.dp else bubbleDp.dp)
-    Box(
-        modifier = Modifier
-            .size(size)
-            .clip(CircleShape)
-            .background(if (isOverlapping) Color.Red.copy(alpha = 0.7f) else Color.Gray.copy(alpha = 0.7f)),
-        contentAlignment = Alignment.Center
-    ) {
-        Icon(Icons.Default.Close, contentDescription = "Dismiss", tint = Color.White)
-    }
-}
-
-
 private fun createLayoutParams(
     x: Int = 0, y: Int = 0,
     gravity: Int = Gravity.TOP or Gravity.START
