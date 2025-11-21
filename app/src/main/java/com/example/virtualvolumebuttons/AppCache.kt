@@ -5,10 +5,14 @@ import android.content.SharedPreferences
 import androidx.compose.ui.graphics.Color
 import androidx.core.content.edit
 
+val bubbleRowDpX = 120
+val bubbleRowDpY = 70
+val bubbleColumnDpX = 70
+val bubbleColumnDpY = 120
 object AppCache {
     private lateinit var prefs: SharedPreferences
 
-    // MUST be called once (usually in Application class)
+
     fun init(context: Context) {
         prefs = context.getSharedPreferences("app_cache", Context.MODE_PRIVATE)
     }
@@ -39,6 +43,14 @@ object AppCache {
 
     fun isRow(): Boolean {
         return prefs.getBoolean("isRow", false)
+    }
+
+    fun getBubbleRowDpX(): Int {
+        return 100
+    }
+
+    fun getBubbleRowDpY(): Int {
+        return if(isRow()) 100 else 60
     }
 
 

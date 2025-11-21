@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
@@ -14,8 +15,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.unit.dp
-import com.example.virtualvolumebuttons.bubbleDpX
-import com.example.virtualvolumebuttons.bubbleDpY
+import com.example.virtualvolumebuttons.AppCache
+import com.example.virtualvolumebuttons.bubbleColumnDpX
+import com.example.virtualvolumebuttons.bubbleColumnDpY
+import com.example.virtualvolumebuttons.bubbleRowDpX
+import com.example.virtualvolumebuttons.bubbleRowDpY
 
 @Composable
 fun FloatingBubble(
@@ -23,9 +27,11 @@ fun FloatingBubble(
     onDragStart: () -> Unit,
     onDrag: (Float, Float) -> Unit,
     onDragEnd: () -> Unit) {
+    val width = if(AppCache.isRow()) bubbleRowDpX else bubbleColumnDpX
+    val height = if(AppCache.isRow()) bubbleRowDpY else bubbleColumnDpY
     Box(
         modifier = Modifier
-            .size(width = bubbleDpX.dp, height = bubbleDpY.dp)
+            .size(width = width.dp, height = height.dp)
             .fillMaxSize()
             .pointerInput(Unit) {
                 detectDragGestures(
@@ -38,6 +44,6 @@ fun FloatingBubble(
             },
         contentAlignment = Alignment.Center,
         ) {
-        WidgetCom(context, null, null)
+        WidgetCom(context)
     }
 }

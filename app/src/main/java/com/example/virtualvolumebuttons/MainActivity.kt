@@ -62,8 +62,16 @@ class MainActivity : ComponentActivity() {
                                 fontWeight = FontWeight.Bold
                             )
                             Row(){
-                                WidgetCom(null, null, null)
-                                WidgetCom(null, Color.White, Color.Black)
+                                WidgetCom(isRow = false)
+                                WidgetCom(isRow = true)
+                                WidgetCom(bgColor = Color.Black, btnColor = Color.Red, isRow = false)
+                                WidgetCom(bgColor = Color.Black, btnColor = Color.Red, isRow = true)
+                            }
+                            Row(){
+                                WidgetCom(bgColor = Color.Black, btnColor = Color.Green, isRow = false)
+                                WidgetCom(bgColor = Color.Black, btnColor = Color.Green, isRow = true)
+                                WidgetCom(bgColor = Color.Black, btnColor = Color.Cyan, isRow = false)
+                                WidgetCom(bgColor = Color.Black, btnColor = Color.Cyan, isRow = true)
                             }
                         }
 

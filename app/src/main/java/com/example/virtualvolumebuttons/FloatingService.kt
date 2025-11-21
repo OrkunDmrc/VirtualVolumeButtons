@@ -58,8 +58,8 @@ import com.example.virtualvolumebuttons.Actions.VolumeUpAction
 import com.example.virtualvolumebuttons.Components.DismissBubble
 import com.example.virtualvolumebuttons.Components.FloatingBubble
 
-val bubbleDpX = 60
-val bubbleDpY = 100
+/*val bubbleDpX = if(AppCache.isRow()) 100 else 60
+val bubbleDpY = if(AppCache.isRow()) 60 else 100*/
 val dismissDp = 80
 class FloatingService : Service() {
 
@@ -130,11 +130,12 @@ class FloatingService : Service() {
     }
 
     private fun checkOverlap(): Boolean {
-        val bubbleSize = bubbleDpX.dpToPx()
+        val bubbleSizeX = if(AppCache.isRow()) bubbleRowDpX else bubbleColumnDpX
+        val bubbleSizeY = if(AppCache.isRow()) bubbleRowDpY else bubbleColumnDpY
         val dismissSize = dismissDp.dpToPx()
 
-        val bubbleCenterX = bubbleParams.x + bubbleSize / 2
-        val bubbleCenterY = bubbleParams.y + bubbleSize / 2
+        val bubbleCenterX = bubbleParams.x + bubbleSizeX / 2
+        val bubbleCenterY = bubbleParams.y + bubbleSizeY / 2
 
         val screenHeight = Resources.getSystem().displayMetrics.heightPixels
         val dismissLeft = dismissParams.x
