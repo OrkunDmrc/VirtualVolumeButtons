@@ -14,6 +14,7 @@
         android:roundIcon="@mipmap/ic_classic_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.VirtualVolumeButtons">
+        <service android:name=".FloatingService" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
