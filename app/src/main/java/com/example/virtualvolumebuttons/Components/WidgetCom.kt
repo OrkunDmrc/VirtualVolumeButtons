@@ -44,7 +44,7 @@ fun WidgetCom(
     val btn = volumeButtons?.btnColor ?: AppCache.getBtnColor()
     val isRow = volumeButtons?.isRow?: AppCache.isRow()
     val round = 20.dp
-    val size = 40.dp
+    val size = 35.dp
     val space = 10.dp
     val clickableUpModifier =
         if (context != null) {
@@ -151,7 +151,7 @@ fun WidgetCom(
                     .background(bg)
             ) {
                 Image(
-                    painter = painterResource(R.drawable.ic_volume_up),
+                    painter = painterResource(R.drawable.outline_add_24),
                     contentDescription = "volume up",
                     colorFilter = ColorFilter.tint(btn),
                     modifier = Modifier
@@ -175,7 +175,7 @@ fun WidgetCom(
                     .background(bg)
             ) {
                 Image(
-                    painter = painterResource(R.drawable.ic_volume_down),
+                    painter = painterResource(R.drawable.remove_24dp),
                     contentDescription = "volume down",
                     colorFilter = ColorFilter.tint(btn),
                     modifier = Modifier

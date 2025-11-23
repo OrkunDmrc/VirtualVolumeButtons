@@ -27,8 +27,8 @@ fun WidgetBox(
             color = Color(0xFF6650a4),
             shape = RoundedCornerShape(10.dp)
         )
-        .width(145.dp)
-        .height(145.dp)
+        .width(120.dp)
+        .height(120.dp)
         .padding(5.dp)
         .background(if(selectedId == volumeButtons.id) Color(0xFF6650a4) else Color.Transparent)
         .clickable{onSelected()},

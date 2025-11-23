@@ -9,6 +9,7 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -28,6 +29,7 @@ import com.example.virtualvolumebuttons.Components.WidgetBox
 import com.example.virtualvolumebuttons.objects.VolumeButtons
 import com.example.virtualvolumebuttons.ui.theme.VirtualVolumeButtonsTheme
 import androidx.core.net.toUri
+import androidx.glance.text.Text
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdSize
@@ -74,20 +76,32 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+}
+
+fun getStatusBarHeightDp(context: Context): Int {
+    var result = 0
+    val resourceId = context.resources.getIdentifier("status_bar_height", "dimen", "android")
+    if (resourceId > 0) {
+        result = context.resources.getDimensionPixelSize(resourceId)
+    }
+    return (result / context.resources.displayMetrics.density).toInt()
 }
 
 @Composable
 fun MyScreen(context: Context){
     val selectedId = remember { mutableStateOf(AppCache.getId()) }
     Scaffold(
-        containerColor = Color(0xFFCCC2DC),
-        contentColor = Color(0xFFCCC2DC),
+        containerColor = Color(0xFF0A0A0A),
+        contentColor = Color(0xFF0A0A0A),
+        modifier = Modifier.padding(top = getStatusBarHeightDp(context).dp),
         content = { padding ->
             Column (
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(padding),
-                verticalArrangement = Arrangement.Center,
+                    .padding(padding)
+                    .padding(bottom = 10.dp),
+                verticalArrangement = Arrangement.Bottom,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 for (i in volumeButtonsList.indices step 2) {
@@ -115,7 +129,9 @@ fun MyScreen(context: Context){
             }
         },
         bottomBar = {
-            Column {
+            Column(
+                modifier = Modifier.background(Color.Black)
+            ) {
                 AndroidView(modifier = Modifier.fillMaxWidth(), factory = { context ->
                     AdView(context).apply {
                         setAdSize(AdSize.BANNER)

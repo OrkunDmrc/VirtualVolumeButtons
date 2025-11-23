@@ -6,10 +6,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.core.content.edit
 import com.example.virtualvolumebuttons.objects.VolumeButtons
 
-val bubbleRowDpX = 120
-val bubbleRowDpY = 70
-val bubbleColumnDpX = 70
-val bubbleColumnDpY = 120
+val bubbleRowDpX = 95
+val bubbleRowDpY = 55
+val bubbleColumnDpX = 55
+val bubbleColumnDpY = 95
 object AppCache {
     private lateinit var prefs: SharedPreferences
 
