@@ -51,8 +51,6 @@ class FloatingService : Service() {
         dismissParams = createLayoutParams(y = 5.dpToPx(), gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL)
         dismissView = createDismissView()
         bubbleView = createBubbleView()
-
-        // Position dismiss view closer to the bottom
         windowManager.addView(dismissView, dismissParams)
         windowManager.addView(bubbleView, bubbleParams)
         dismissParams.x = (Resources.getSystem().displayMetrics.widthPixels - dismissDp.dpToPx()) / 2

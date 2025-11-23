@@ -1,11 +1,11 @@
 package com.example.virtualvolumebuttons
 
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -23,10 +23,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
 import com.example.virtualvolumebuttons.Components.WidgetBox
 import com.example.virtualvolumebuttons.objects.VolumeButtons
 import com.example.virtualvolumebuttons.ui.theme.VirtualVolumeButtonsTheme
 import androidx.core.net.toUri
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdSize
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.MobileAds
 
 val volumeButtonsList : List<VolumeButtons> = listOf(
     VolumeButtons(id = 1, bgColor = Color.Black, btnColor = Color.White, isRow = false),
@@ -58,6 +65,9 @@ class MainActivity : ComponentActivity() {
         } else {
             startService(serviceIntent)
         }
+        /*MobileAds.initialize(this){
+            Log.d("TAG", "onCreate: initAd")
+        }*/
         setContent {
             VirtualVolumeButtonsTheme {
                 MyScreen(this)
@@ -102,6 +112,36 @@ fun MyScreen(context: Context){
                         })
                     }
                 }
+            }
+        },
+        bottomBar = {
+            Column {
+                AndroidView(modifier = Modifier.fillMaxWidth(), factory = { context ->
+                    AdView(context).apply {
+                        setAdSize(AdSize.BANNER)
+                        adUnitId = "ca-app-pub-3940256099942544/9214589741"
+                        loadAd(AdRequest.Builder().build())
+                        this.adListener = object : AdListener() {
+                            override fun onAdClicked() {
+                                Log.d("TAG", "onAdClicked: ")
+                            }
+                            override fun onAdClosed() {
+                                Log.d("TAG", "onAdClosed: ")
+                            }
+                            override fun onAdFailedToLoad(adError: LoadAdError) {
+                                Log.d("TAG", "onAdFailedToLoad: $adError")
+                            }
+                            override fun onAdImpression() {
+                            }
+                            override fun onAdLoaded() {
+                                Log.d("TAG", "onAdLoaded: ")
+                            }
+                            override fun onAdOpened() {
+                                Log.d("TAG", "onAdOpened: ")
+                            }
+                        }
+                    }
+                })
             }
         }
     )
