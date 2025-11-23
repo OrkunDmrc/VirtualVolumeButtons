@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.compose.ui.graphics.Color
 import androidx.core.content.edit
+import com.example.virtualvolumebuttons.objects.VolumeButtons
 
 val bubbleRowDpX = 120
 val bubbleRowDpY = 70
@@ -17,12 +18,17 @@ object AppCache {
         prefs = context.getSharedPreferences("app_cache", Context.MODE_PRIVATE)
     }
 
-    fun saveSelectedColors(bgColor: Color, btnColor: Color, isRow: Boolean) {
+    fun saveSelectedButtons(volumeButtons: VolumeButtons) {
         prefs.edit {
-            putLong("bgColor", bgColor.value.toLong())
-            putLong("btnColor", btnColor.value.toLong())
-            putBoolean("isRow", isRow)
+            putInt("selectedId", volumeButtons.id)
+            putLong("bgColor", volumeButtons.bgColor.value.toLong())
+            putLong("btnColor", volumeButtons.btnColor.value.toLong())
+            putBoolean("isRow", volumeButtons.isRow)
         }
+    }
+
+    fun getId(): Int {
+        return prefs.getInt("selectedId", 1)
     }
 
     fun getBgColor(): Color {
@@ -45,13 +51,7 @@ object AppCache {
         return prefs.getBoolean("isRow", false)
     }
 
-    fun getBubbleRowDpX(): Int {
-        return 100
-    }
 
-    fun getBubbleRowDpY(): Int {
-        return if(isRow()) 100 else 60
-    }
 
 
 }

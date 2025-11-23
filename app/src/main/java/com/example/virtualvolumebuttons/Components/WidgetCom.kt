@@ -1,7 +1,6 @@
 package com.example.virtualvolumebuttons.Components
 
 import android.content.Context
-import android.view.View
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -11,7 +10,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -26,7 +24,6 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.virtualvolumebuttons.Actions.VolumeDownAction
 import com.example.virtualvolumebuttons.Actions.VolumeUpAction
@@ -36,19 +33,35 @@ import com.example.virtualvolumebuttons.bubbleColumnDpX
 import com.example.virtualvolumebuttons.bubbleColumnDpY
 import com.example.virtualvolumebuttons.bubbleRowDpX
 import com.example.virtualvolumebuttons.bubbleRowDpY
+import com.example.virtualvolumebuttons.objects.VolumeButtons
 
 @Composable
 fun WidgetCom(
-    context: Context? = null,
-    bgColor: Color? = null,
-    btnColor: Color? = null,
-    isRow: Boolean? = null){
-    val bg = bgColor ?: AppCache.getBgColor()
-    val btn = btnColor ?: AppCache.getBtnColor()
-    val isRow = isRow?: AppCache.isRow()
+        context: Context? = null,
+        volumeButtons: VolumeButtons? = null
+    ){
+    val bg = volumeButtons?.bgColor ?: AppCache.getBgColor()
+    val btn = volumeButtons?.btnColor ?: AppCache.getBtnColor()
+    val isRow = volumeButtons?.isRow?: AppCache.isRow()
     val round = 20.dp
     val size = 40.dp
     val space = 10.dp
+    val clickableUpModifier =
+        if (context != null) {
+            Modifier.clickable {
+                VolumeUpAction().volumeUp(context)
+            }
+        } else {
+            Modifier
+        }
+    val clickableDownModifier =
+        if (context != null) {
+            Modifier.clickable {
+                VolumeDownAction().volumeDown(context)
+            }
+        } else {
+            Modifier
+        }
     if (isRow) {
         Row(
             modifier = Modifier
@@ -63,7 +76,6 @@ fun WidgetCom(
                 ),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
-
         ) {
             Box(
                 modifier = Modifier
@@ -80,18 +92,12 @@ fun WidgetCom(
                     colorFilter = ColorFilter.tint(btn),
                     modifier = Modifier
                         .size(size)
-                        .clickable{
-                            if(context != null)
-                                VolumeDownAction().volumeDown(context)
-                            else
-                                null
-                        }
+                        .then(clickableDownModifier)
                         .border(
                             width = 2.dp,
                             color = btn,
                             shape = CircleShape
                         )
-
                 )
             }
             Spacer(modifier = Modifier.width(space))
@@ -110,12 +116,7 @@ fun WidgetCom(
                     colorFilter = ColorFilter.tint(btn),
                     modifier = Modifier
                         .size(size)
-                        .clickable {
-                            if (context != null)
-                                VolumeUpAction().volumeUp(context)
-                            else
-                                null
-                        }
+                        .then(clickableUpModifier)
                         .border(
                             width = 2.dp,
                             color = btn,
@@ -155,12 +156,7 @@ fun WidgetCom(
                     colorFilter = ColorFilter.tint(btn),
                     modifier = Modifier
                         .size(size)
-                        .clickable {
-                            if (context != null)
-                                VolumeUpAction().volumeUp(context)
-                            else
-                                null
-                        }
+                        .then(clickableUpModifier)
                         .border(
                             width = 2.dp,
                             color = btn,
@@ -184,12 +180,7 @@ fun WidgetCom(
                     colorFilter = ColorFilter.tint(btn),
                     modifier = Modifier
                         .size(size)
-                        .clickable {
-                            if (context != null)
-                                VolumeDownAction().volumeDown(context)
-                            else
-                                null
-                        }
+                        .then(clickableDownModifier)
                         .border(
                             width = 2.dp,
                             color = btn,
@@ -199,10 +190,4 @@ fun WidgetCom(
             }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun WidgetPreview() {
-    WidgetCom(null, null, null)
 }
