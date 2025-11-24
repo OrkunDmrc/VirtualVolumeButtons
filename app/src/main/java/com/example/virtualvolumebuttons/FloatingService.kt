@@ -25,6 +25,7 @@ import androidx.savedstate.SavedStateRegistryOwner
 import androidx.savedstate.setViewTreeSavedStateRegistryOwner
 import com.example.virtualvolumebuttons.Components.DismissBubble
 import com.example.virtualvolumebuttons.Components.FloatingBubble
+import com.google.android.gms.ads.AdSize
 
 val dismissDp = 80
 class FloatingService : Service() {
@@ -47,7 +48,7 @@ class FloatingService : Service() {
 
         val bubbleXWidth = if(AppCache.isRow()) bubbleRowDpX else bubbleColumnDpX
         val startX = (Resources.getSystem().displayMetrics.widthPixels - bubbleXWidth.dpToPx()) / 2
-        bubbleParams = createLayoutParams(x = startX)
+        bubbleParams = createLayoutParams(x = startX, y = AdSize.BANNER.height.dpToPx())
         dismissParams = createLayoutParams(y = 5.dpToPx(), gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL)
         dismissView = createDismissView()
         bubbleView = createBubbleView()

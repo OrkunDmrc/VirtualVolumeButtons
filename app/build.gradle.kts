@@ -1,8 +1,19 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
 }
+
+val localProps = Properties().apply {
+    val lp = rootProject.file("local.properties")
+    if (lp.exists()) load(lp.inputStream())
+}
+val admobId = localProps.getProperty("ADMOB_ID", "")
+val bannerId = localProps.getProperty("BANNER_ID", "")
+val appOpenId = localProps.getProperty("APP_OPEN_ID", "")
+
 
 android {
     namespace = "com.example.virtualvolumebuttons"
@@ -18,6 +29,10 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        manifestPlaceholders["ADMOB_APP_ID"] = admobId
+        resValue("string", "BANNER_ID", bannerId)
+        resValue("string", "APP_OPEN_ID", appOpenId)
     }
 
     buildTypes {

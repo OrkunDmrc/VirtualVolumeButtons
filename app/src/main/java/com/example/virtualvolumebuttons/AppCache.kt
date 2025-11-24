@@ -10,6 +10,12 @@ val bubbleRowDpX = 95
 val bubbleRowDpY = 55
 val bubbleColumnDpX = 55
 val bubbleColumnDpY = 95
+
+val primaryColor = Color(0xFF01579B)
+val secondaryColor = Color(0xFFF6C810)
+val whiteColor = Color(0xFFF5F5F5)
+val blackColor = Color(0xFF050505)
+
 object AppCache {
     private lateinit var prefs: SharedPreferences
 

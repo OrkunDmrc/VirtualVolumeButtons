@@ -1,19 +1,28 @@
 package com.example.virtualvolumebuttons.Components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.virtualvolumebuttons.objects.VolumeButtons
+import com.example.virtualvolumebuttons.primaryColor
+import com.example.virtualvolumebuttons.secondaryColor
+import com.example.virtualvolumebuttons.whiteColor
 
 @Composable
 fun WidgetBox(
@@ -21,19 +30,22 @@ fun WidgetBox(
     selectedId: Int,
     onSelected: () -> Unit
 ) {
-    Box(modifier = Modifier
-        .border(
-            width = 2.dp,
-            color = Color(0xFF6650a4),
-            shape = RoundedCornerShape(10.dp)
+    Card(
+        modifier = Modifier.size(110.dp)
+            .clickable { onSelected() },
+        shape = RoundedCornerShape(10.dp),
+        border = BorderStroke(1.dp, whiteColor),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = if (selectedId == volumeButtons.id) whiteColor else primaryColor
         )
-        .width(120.dp)
-        .height(120.dp)
-        .padding(5.dp)
-        .background(if(selectedId == volumeButtons.id) Color(0xFF6650a4) else Color.Transparent)
-        .clickable{onSelected()},
-        contentAlignment = Alignment.Center,
-    ){
-        WidgetCom(volumeButtons = volumeButtons)
+    ) {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center  // centers the child
+        ) {
+            WidgetCom(volumeButtons = volumeButtons)
+        }
+
     }
 }

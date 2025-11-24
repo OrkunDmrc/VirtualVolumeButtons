@@ -78,7 +78,6 @@ class VirtualVolumeButtons : Application(), Application.ActivityLifecycleCallbac
 
     companion object {
         private const val LOG_TAG = "VirtualVolumeButtons"
-        private const val AD_UNIT_ID = "ca-app-pub-3940256099942544/9257395921"
     }
 
     private inner class AppOpenAdManager{
@@ -95,7 +94,7 @@ class VirtualVolumeButtons : Application(), Application.ActivityLifecycleCallbac
             val request = AdRequest.Builder().build()
             AppOpenAd.load(
                 context,
-                AD_UNIT_ID,
+                context.getString(R.string.APP_OPEN_ID),
                 request,
                 AppOpenAd.APP_OPEN_AD_ORIENTATION_PORTRAIT,
                 object : AppOpenAd.AppOpenAdLoadCallback(){

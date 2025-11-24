@@ -68,9 +68,9 @@ fun WidgetCom(
                 .width(bubbleRowDpX.dp)
                 .height(bubbleRowDpY.dp)
                 .clip(RoundedCornerShape(round))
-                .background(bg.copy(alpha = 0.0f))
+                .background(bg.copy(alpha = 0.5f))
                 .border(
-                    width = 2.dp,
+                    width = 1.dp,
                     color = btn,
                     shape = RoundedCornerShape(round)
                 ),
@@ -94,7 +94,7 @@ fun WidgetCom(
                         .size(size)
                         .then(clickableDownModifier)
                         .border(
-                            width = 2.dp,
+                            width = 1.dp,
                             color = btn,
                             shape = CircleShape
                         )
@@ -104,7 +104,7 @@ fun WidgetCom(
             Box(
                 modifier = Modifier
                     .shadow(
-                        elevation = 2.dp,
+                        elevation = 1.dp,
                         shape = RoundedCornerShape(round),
                         clip = true
                     )
@@ -118,7 +118,7 @@ fun WidgetCom(
                         .size(size)
                         .then(clickableUpModifier)
                         .border(
-                            width = 2.dp,
+                            width = 1.dp,
                             color = btn,
                             shape = CircleShape
                         )
@@ -132,9 +132,9 @@ fun WidgetCom(
                 .width(bubbleColumnDpX.dp)
                 .height(bubbleColumnDpY.dp)
                 .clip(RoundedCornerShape(round))
-                .background(bg.copy(alpha = 0.0f))
+                .background(bg.copy(alpha = 0.5f))
                 .border(
-                    width = 2.dp,
+                    width = 1.dp,
                     color = btn,
                     shape = RoundedCornerShape(round)
                 ),
@@ -144,7 +144,7 @@ fun WidgetCom(
             Box(
                 modifier = Modifier
                     .shadow(
-                        elevation = 2.dp,
+                        elevation = 1.dp,
                         shape = RoundedCornerShape(round),
                         clip = true
                     )
@@ -158,7 +158,7 @@ fun WidgetCom(
                         .size(size)
                         .then(clickableUpModifier)
                         .border(
-                            width = 2.dp,
+                            width = 1.dp,
                             color = btn,
                             shape = RoundedCornerShape(round)
                         ),
@@ -168,7 +168,7 @@ fun WidgetCom(
             Box(
                 modifier = Modifier
                     .shadow(
-                        elevation = 2.dp,
+                        elevation = 1.dp,
                         shape = RoundedCornerShape(round),
                         clip = true
                     )
@@ -182,7 +182,7 @@ fun WidgetCom(
                         .size(size)
                         .then(clickableDownModifier)
                         .border(
-                            width = 2.dp,
+                            width = 1.dp,
                             color = btn,
                             shape = RoundedCornerShape(round)
                         ),
